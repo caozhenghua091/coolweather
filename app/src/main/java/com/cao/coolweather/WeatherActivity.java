@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.cao.coolweather.gson.Forecast;
 import com.cao.coolweather.gson.Weather;
+import com.cao.coolweather.service.AutoUpdateService;
 import com.cao.coolweather.util.HttpUtil;
 import com.cao.coolweather.util.Utility;
 
@@ -185,29 +187,41 @@ public class WeatherActivity extends AppCompatActivity {
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
         forecastLayout.removeAllViews();
-        for (Forecast forecast : weather.forecastList) {
-            View view = LayoutInflater.from(this).inflate(R.layout.forecast_item,forecastLayout,false);
-            TextView dateText = (TextView) view.findViewById(R.id.date_text);
-            TextView infoText = (TextView) view.findViewById(R.id.info_text);
-            TextView maxText = (TextView) view.findViewById(R.id.max_text);
-            TextView minText = (TextView) view.findViewById(R.id.min_text);
-            dateText.setText(forecast.date);
-            infoText.setText(forecast.more.info);
-            maxText.setText(forecast.temperature.max);
-            minText.setText(forecast.temperature.min);
-            forecastLayout.addView(view);
+
+        //定时服务
+        if (weather != null && "ok".equals(weather.status)){
+            for (Forecast forecast : weather.forecastList) {
+                View view = LayoutInflater.from(this).inflate(R.layout.forecast_item,forecastLayout,false);
+                TextView dateText = (TextView) view.findViewById(R.id.date_text);
+                TextView infoText = (TextView) view.findViewById(R.id.info_text);
+                TextView maxText = (TextView) view.findViewById(R.id.max_text);
+                TextView minText = (TextView) view.findViewById(R.id.min_text);
+                dateText.setText(forecast.date);
+                infoText.setText(forecast.more.info);
+                maxText.setText(forecast.temperature.max);
+                minText.setText(forecast.temperature.min);
+                forecastLayout.addView(view);
+            }
+
+            if (weather.aqi != null){
+                aqiText.setText(weather.aqi.city.aqi);
+                pm25Text.setText(weather.aqi.city.pm25);
+            }
+            String comfort = "舒适度：" + weather.suggestion.comfort.info;
+            String carWash = "洗车指数："+weather.suggestion.carWash.info;
+            String sport = "运动建议："+weather.suggestion.sport.info;
+            comfortText.setText(comfort);
+            carWashText.setText(carWash);
+            sportText.setText(sport);
+            weatherLayout.setVisibility(View.VISIBLE);
+
+            Intent intent = new Intent(this, AutoUpdateService.class);
+            startService(intent);
+        }else {
+            Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
         }
-        if (weather.aqi != null){
-            aqiText.setText(weather.aqi.city.aqi);
-            pm25Text.setText(weather.aqi.city.pm25);
-        }
-        String comfort = "舒适度：" + weather.suggestion.comfort.info;
-        String carWash = "洗车指数："+weather.suggestion.carWash.info;
-        String sport = "运动建议："+weather.suggestion.sport.info;
-        comfortText.setText(comfort);
-        carWashText.setText(carWash);
-        sportText.setText(sport);
-        weatherLayout.setVisibility(View.VISIBLE);
+
+
     }
 
 
