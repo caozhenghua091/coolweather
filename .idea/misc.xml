@@ -4,7 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/activity_main.xml" value="0.2694746376811594" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/activity_weather.xml" value="0.24954710144927536" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/aqi.xml" value="0.2558876811594203" />
         <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/choose_area.xml" value="0.23777173913043478" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/forecast.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/forecast_item.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/now.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/suggestion.xml" value="0.2558876811594203" />
+        <entry key="..\:/Users/uniontech/AndroidStudioProjects/coolweather/app/src/main/res/layout/title.xml" value="0.19202898550724637" />
       </map>
     </option>
   </component>
